@@ -19,13 +19,13 @@ public class Main {
         Queue<Integer> queue = new LinkedList<>();
         visited[k] = true;
         queue.add(k);
+        cnt++;
         while (!queue.isEmpty()) {
             Integer temp = queue.poll();
             for (int i = 1; i <= N; i++) {
                 if (arr[temp][i] == 1 && !visited[i]) {
                     visited[i]= true;
                     queue.add(i);
-                    cnt++;
                 }
             }
         }
@@ -33,10 +33,10 @@ public class Main {
 
     static void dfs(int k) {
         visited[k] = true;
-        if (k == N) return;
-        cnt++;
+  //      if (k == N) return;
         for (int i = 1; i<=N; i++) {
             if (arr[k][i] == 1 && !visited[i]){
+                cnt++;
                 dfs(i);
             }
         }
@@ -56,11 +56,11 @@ public class Main {
             arr[s][e] = 1;
             arr[e][s] = 1;
         }
-        visited = new boolean[N+1];
-        bfs(1);
-//        cnt = 0;
 //        visited = new boolean[N+1];
-//        dfs(1);
+//        bfs(1);
+//        cnt = 0;
+        visited = new boolean[N+1];
+        dfs(1);
         bw.write(cnt+"");
         bw.flush();
         bw.close();
