@@ -1,47 +1,68 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
-    static StringBuilder sb = new StringBuilder();
-    static boolean[] visited;
+    static int N,M, cnt;
     static int[][] arr;
-    static int cnt;
+    static boolean[] visited;
+    static BufferedWriter bw;
+    //7
+    //6
+    //1 2
+    //2 3
+    //1 5
+    //5 2
+    //5 6
+    //4 7
+    static void bfs(int k) {
+        Queue<Integer> queue = new LinkedList<>();
+        visited[k] = true;
+        queue.add(k);
+        while (!queue.isEmpty()) {
+            Integer temp = queue.poll();
+            for (int i = 1; i <= N; i++) {
+                if (arr[temp][i] == 1 && !visited[i]) {
+                    visited[i]= true;
+                    queue.add(i);
+                    cnt++;
+                }
+            }
+        }
+    }
+
+    static void dfs(int k) {
+        visited[k] = true;
+        if (k == N) return;
+        cnt++;
+        for (int i = 1; i<=N; i++) {
+            if (arr[k][i] == 1 && !visited[i]){
+                dfs(i);
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
-        int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
-        arr = new int[n+1][n+1];
-        for (int i =1; i <= m; i++) {
-            st = new StringTokenizer(br.readLine() , " ");
+        N = Integer.parseInt(br.readLine());
+        M = Integer.parseInt(br.readLine());
+        arr = new int[N+1][N +1];
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine(), " ");
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
             arr[s][e] = 1;
             arr[e][s] = 1;
         }
-
-        //7
-        //6
-        //1 2
-        //2 3
-        //1 5
-        //5 2
-        //5 6
-        //4 7
-        visited = new boolean[n+1];
-        dfs(1);
-        System.out.println(cnt);
-    }
-    private static void dfs(int i) {
-        visited[i] = true;
-        if (i == arr.length) return;
-        for (int j = 1; j < arr.length; j++) {
-            if (arr[i][j] == 1 && !visited[j]) {
-                cnt++;
-                dfs(j);
-            }
-        }
+        visited = new boolean[N+1];
+        bfs(1);
+//        cnt = 0;
+//        visited = new boolean[N+1];
+//        dfs(1);
+        bw.write(cnt+"");
+        bw.flush();
+        bw.close();
     }
 }
