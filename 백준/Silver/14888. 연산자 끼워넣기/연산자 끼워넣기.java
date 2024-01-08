@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -25,19 +24,17 @@ public class Main {
 
     }
 
-    static int calculator() {
-        int value = nums[1];;
-        for (int i = 1; i<=N-1; i++) {
-            if (order[i] == 1) value = value+nums[i+1];
-            if (order[i] == 2) value = value-nums[i+1];
-            if (order[i] == 3) value = value*nums[i+1];
-            if (order[i] == 4) value = value/nums[i+1];
-        }
-        return value;
+    static int calculator(int value, int c, int num) {
+
+        if (c == 1) return value + num;
+        else if (c == 2) return value - num;
+        else if (c == 3) return value * num;
+        else return value / num;
+
     }
-    static void rec_fuc(int k) {
+
+    static void rec_fuc(int k, int value) {
         if (k == N) {
-            int value = calculator();
             max = Math.max(max, value);
             min = Math.min(min, value);
         } else {
@@ -46,7 +43,8 @@ public class Main {
                 if (operator[c] >= 1) {
                     operator[c]--;
                     order[k] = c;
-                    rec_fuc(k+1);
+                    int new_value = calculator(value,c, nums[k+1]);
+                    rec_fuc(k+1, new_value);
                     operator[c]++;
                     order[k] = 0;
                 }
@@ -75,7 +73,7 @@ public class Main {
 
         max = Integer.MIN_VALUE;
         min = Integer.MAX_VALUE;
-        rec_fuc(1);
+        rec_fuc(1, nums[1]);
 
         sb.append(max).append('\n').append(min);
         bw.write(sb.toString());
