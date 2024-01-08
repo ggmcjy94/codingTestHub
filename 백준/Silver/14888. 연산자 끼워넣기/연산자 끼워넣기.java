@@ -1,72 +1,87 @@
 import java.io.*;
-import java.util.*;
-
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    static BufferedReader br;
-    static BufferedWriter bw;
 
-    static List<List<Integer>> graph = new ArrayList<>();
+    static int N,M,min,max;
     static int[][] arr;
-    static boolean[] visit;
+    static int[] nums , operator,order;
+    static int[] dx = {0,1,0,-1};
+    static int[] dy = {1,0,-1,0};
+    static Queue<int[]> queue = new LinkedList<>();
     static boolean[][] visited;
-    static int[] checked;
-    static int N , K, s,x,y;
-    static int cnt = 1;
-    static boolean chek;
-    static int[] dx = {1,0,-1,0};
-    static int[] dy = {0,1,0,-1};
-    static int[] number;
-    static int[] operator = new int[4];
-    static int MAX = Integer.MIN_VALUE;
-    static int MIN = Integer.MAX_VALUE;
+
+
+
+    static StringBuilder sb = new StringBuilder();
+
+    static void bfs() {
+
+
+
+    }
+
+    static int calculator() {
+        int value = nums[1];;
+        for (int i = 1; i<=N-1; i++) {
+            if (order[i] == 1) value = value+nums[i+1];
+            if (order[i] == 2) value = value-nums[i+1];
+            if (order[i] == 3) value = value*nums[i+1];
+            if (order[i] == 4) value = value/nums[i+1];
+        }
+        return value;
+    }
+    static void rec_fuc(int k) {
+        if (k == N) {
+            int value = calculator();
+            max = Math.max(max, value);
+            min = Math.min(min, value);
+        } else {
+
+            for (int c = 1; c <= 4; c++) {
+                if (operator[c] >= 1) {
+                    operator[c]--;
+                    order[k] = c;
+                    rec_fuc(k+1);
+                    operator[c]++;
+                    order[k] = 0;
+                }
+            }
+        }
+    }
+
 
     public static void main(String[] args) throws IOException {
-        br = new BufferedReader(new InputStreamReader(System.in));
-        bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        N = Integer.parseInt(br.readLine());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
-        st = new StringTokenizer(br.readLine(), " ");
-        number = new int[N];
-        for (int i = 0; i<N; i++) {
-            number[i] = Integer.parseInt(st.nextToken());
-        }
 
+        N = Integer.parseInt(br.readLine());
+        nums = new int[N+1];
+        operator = new int[5];
+        order = new int[N+1];
+        st = new StringTokenizer(br.readLine(), " ");
+        for (int i = 1; i<=N; i++) {
+            nums[i] = Integer.parseInt(st.nextToken());
+        }
         st = new StringTokenizer(br.readLine()," ");
-        for (int i = 0; i<4; i++) {
+        for (int i = 1; i<=4; i++) {
             operator[i] = Integer.parseInt(st.nextToken());
         }
 
-        dfs(number[0], 1);
-        bw.write(MAX+"\n");
-        bw.write(MIN+"\n");
+        max = Integer.MIN_VALUE;
+        min = Integer.MAX_VALUE;
+        rec_fuc(1);
+
+        sb.append(max).append('\n').append(min);
+        bw.write(sb.toString());
 
         bw.flush();
         bw.close();
-    }
-
-    private static void dfs(int num, int id) {
-        if (id == N) {
-            MAX = Math.max(MAX, num);
-            MIN = Math.min(MIN, num);
-            return;
-        }
-
-        for (int i = 0; i< 4 ; i++) {
-            if (operator[i] > 0) {
-                operator[i]--;
-//3
-//3 4 5
-//1 0 1 0
-                switch (i) {
-                    case 0: dfs(num + number[id], id + 1); break;
-                    case 1: dfs(num - number[id], id + 1); break;
-                    case 2: dfs(num * number[id], id + 1); break;
-                    case 3: dfs(num / number[id], id + 1); break;
-                }
-                operator[i]++;
-            }
-        }
+        br.close();
     }
 }
