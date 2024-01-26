@@ -2,8 +2,9 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N,M,R,K,min,max;
+    static int T,N,S,E,M,R,K,min,max;
     static long ans;
+    static int[] arr;
     static int dx[] = {0, 0, -1, -1, -1, 1, 1, 1};
     static int dy[] = {1, -1, -1, 0, 1, -1, 0, 1};
     static Queue<int[]> queue = new LinkedList<>();
@@ -15,18 +16,22 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
+        // 1 : 1
+        // 2 : 1+1, 2
+        // 3 : 1+1+1, 1+2, 2+1, 3, 4
+        // 4 : 1+1+1+1, 1+2+1, 3+1 , 2+1+1, 2+2 , 1+1+2, 1+3 = 7
         N = Integer.parseInt(br.readLine());
-        int[] dp = new int[11];
-        dp[0] = 0;
+        int [] dp = new int[12];
         dp[1] = 1;
         dp[2] = 2;
         dp[3] = 4;
-
-        for (int i = 4; i < 11; i++) {
-            dp[i] = dp[i-3] +dp[i-2] + dp[i-1];
+        for (int i =4; i <= 11; i++) {
+            dp[i] = dp[i-1] + dp[i-2]  + dp[i-3];
         }
-        for (int i = 0; i< N; i++) {
-            bw.write(dp[Integer.parseInt(br.readLine())] +"\n");
+
+        for (int i = 1; i <= N; i++) {
+            int val = Integer.parseInt(br.readLine());
+            System.out.println(dp[val]);
         }
         bw.flush();
         bw.close();
