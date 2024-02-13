@@ -1,41 +1,29 @@
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-
-
-    static int N,M;
-    static int[][] arr;
+    static int T,N,S,E,M,R,Q,K,min,max;
+    static long ans;
+    static int[] arr;
     static int[] selected;
-    static int[] dx = {0,1,0,-1};
-    static int[] dy = {1,0,-1,0};
+    static int[] dp;
+    static int dx[] = {0, -1, 0 ,1};
+    static int dy[] = {1, 0, -1, 0};
     static Queue<int[]> queue = new LinkedList<>();
-    static boolean[][] visited;
+    static ArrayList<Integer>[] con;
+    static boolean[] visited;
+    static StringBuilder sb = new StringBuilder();
 
-    static StringBuilder sb;
-
-    static void bfs() {
-
-
-
-    }
-
-    static void rec_fuc(int k) {
-        if (k == M+1) {
-            for (int i = 1; i<=M; i++) sb.append(selected[i]).append(' ');
-            sb.append('\n');
+    static void def_rec(int k) {
+        if (k ==  M+1) {
+            for (int i = 1; i<=M; i++)sb.append(selected[i]).append(' ');
+            sb.append("\n");
         } else {
-
-            for (int c = 1; c <= N; c++) {
+            for (int c = 1; c<=N;c++) {
                 selected[k] = c;
-
-                rec_fuc(k+1);
+                def_rec(k+1);
                 selected[k] = 0;
             }
-
-
         }
 
     }
@@ -44,15 +32,15 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        sb = new StringBuilder();
+
+        StringTokenizer st;
+        st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        selected = new int[M+1];
-        rec_fuc(1);
+        selected = new int[M + 1];
+        def_rec(1);
+
         bw.write(sb.toString());
-
-
         bw.flush();
         bw.close();
         br.close();
