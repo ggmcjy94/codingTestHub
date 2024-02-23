@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-    static int T,N,S,E,M,Q,K,min,max;
+    static int T,N,C,S,E,M,Q,K,min,max;
     static long ans;
     static int[][] dis;
     static int[] arr,nums,operator,order;
@@ -20,33 +20,28 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
-        N = Integer.parseInt(br.readLine());
-        int[] a = new int[N+1];
         st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= N; i++) {
-            a[i] = Integer.parseInt(st.nextToken());
-        }
-        int x = Integer.parseInt(br.readLine());
-
-        Arrays.sort(a);
-        int res = 0;
-        for (int i = 1 ; i<= N; i++) {
-            int target = x-a[i] , L=1,R=N;
-            // 1 2 3 5 7 9 10 11 12
-            while (L <= R) {
-                int mid =(L+R) / 2;
-                if (a[mid] == target) {
-                    res+=1;
-                    break;
-                }
-                if (a[mid] < target) { // 12
-                    L = mid + 1;
-                } else {
-                    R = mid - 1;
-                }
+        N = Integer.parseInt(st.nextToken());
+        int[] A = new int[N+1];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <=N; i++) A[i] = Integer.parseInt(st.nextToken());
+        Arrays.sort(A);
+        M = Integer.parseInt(br.readLine());
+        // 1 2 3 5 7 9 10 11 12
+        int L = 1,R = N, sum = 0, cnt = 0;
+        while (L < R) {
+            sum = A[L] + A[R];
+            if (sum == M) {
+                cnt++;
+            }
+            
+            if (sum >= M){
+                R--;
+            } else {
+                L++;
             }
         }
-        bw.write(res/2+"");
+        bw.write(cnt+"");
         bw.flush();
         bw.close();
         br.close();
