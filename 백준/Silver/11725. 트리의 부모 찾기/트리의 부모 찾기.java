@@ -1,83 +1,56 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
-    static int N,M,cnt;
-    static int[][] arr;
-    static ArrayList<ArrayList<Integer>> arr2;
-    static int[] result;
-    static boolean[] visited;
-    static BufferedWriter bw;
+    static int T,N,C,V,S,E,M,Q,K,R,min,max;
+    static long ans;
+    static int[][] dis;
+    static char[][] map;
+    static int[] arr,nums,operator,order,dist;
+    static int[] selected,used;
+    static int[] dp,A;
+    static int dx[] = {0, -1, 0 ,1};
+    static int dy[] = {1, 0, -1, 0};
+    static ArrayList<Integer>[] graph;
+    static boolean[][] visited,possible;
+    static boolean[][][] visit;
+    static StringBuilder sb = new StringBuilder();
 
-    static void bfs (int k)  {
-        Queue<Integer> queue = new LinkedList<>();
-        visited[k] = true;
-        queue.add(k);
-        while (!queue.isEmpty()) {
-            Integer temp = queue.poll();
-            for (Integer ne : arr2.get(temp)) {
-                if (!visited[ne]) {
-                    visited[ne] = true;
-                    result[ne] = temp;
-                    queue.add(ne);
-                }
-            }
-//            for (int i = 1; i <= N; i++) {
-//                
-//
-//                if ((arr[temp][i] == 1||arr[i][temp] ==1) && !visited[i]) {
-//                    result[i] = temp;
-//                    queue.add(i);
-//                    visited[i] = true;
-//                }
-//            }
+    static void dfs(int x, int par) {
+        for (Integer y : graph[x]) {
+            if (y == par) continue;
+            used[y] = x;
+            dfs(y, x);
         }
     }
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
         N = Integer.parseInt(br.readLine());
-//        arr = new int[N+1][N+1];
-        arr2 = new ArrayList<>();
-        for (int i = 0; i <= N; i++) {
-            arr2.add(new ArrayList<>());
+        graph = new ArrayList[N+1];
+        used = new int[N+1];
+        for (int i = 1; i<=N; i++) {
+            graph[i] = new ArrayList<>();
         }
-
-        for (int i = 0; i < N-1; i++) {
-            st = new StringTokenizer(br.readLine(), " ");
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
-//            arr[s][e] = 1;
-//            arr[e][s] = 1;
-            arr2.get(s).add(e);
-            arr2.get(e).add(s);
+        for (int i = 1; i<N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            graph[a].add(b);
+            graph[b].add(a);
         }
-        result = new int[N+1];
-        visited = new boolean[N+1];
-        bfs(1);
-
-        for (int i = 2; i<=N; i++) {
-            bw.write(result[i]+"\n");
+        dfs(1, -1);
+        for (int i = 2; i <= N; i++) {
+            sb.append(used[i]).append('\n');
         }
-//7
- //1 6
-//6 3
-//3 5
-//4 1
-//2 4
-//4 7
-
-//4
-//6
-//1
-//3
-//1
-//4
-
-
+        System.out.println(sb);
         bw.flush();
         bw.close();
+        br.close();
     }
+
 }
