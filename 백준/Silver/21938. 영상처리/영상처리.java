@@ -16,6 +16,19 @@ public class Main {
     // 255 255 255
     // 0   255 0
     // 255 255 0
+    static void dfs (int x, int y) {
+        visited[x][y] = true;
+        for (int i = 0; i<4 ;i++) {
+            int nex = x + dx[i];
+            int ney = y + dy[i];
+            if (nex < 0 || ney < 0 || nex >= N || ney >= M) continue;
+            if (visited[nex][ney]) continue;
+            if (arr[nex][ney] != 255) continue;
+            visited[nex][ney] = true;
+            cnt++;
+            dfs(nex,ney);
+        }
+    }
 
     static void bfs(int x, int y) {
         Queue<int[]> queue = new LinkedList<>();
@@ -69,7 +82,7 @@ public class Main {
             for (int j = 0; j <M; j++) {
                 if (arr[i][j] == 255 && !visited[i][j]) {
                     cnt++;
-                    bfs(i, j);
+                    dfs(i, j);
                 }
             }
         }
