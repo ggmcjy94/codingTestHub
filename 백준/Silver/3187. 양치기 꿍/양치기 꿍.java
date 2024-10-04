@@ -16,13 +16,20 @@ public class Main {
     //초급) PriorityQueue 완전탐색
     //중급) BinarySearch DFS BFS Recursion
     //심화) Graph DP
-    //6 6
-    //...#..
-    //.##v#.
-    //#v.#.#
-    //#.k#.#
-    //.###.#
-    //...###
+    static void dfs (int r, int c) {
+        if (map[r][c] == 'v') w++;
+        if (map[r][c] == 'k') s++;
+        for (int i = 0; i<4; i++) {
+            int nex = dx[i] + r;
+            int ney = dy[i] + c;
+            if (nex < 0 || nex >= N || ney < 0 || ney >= M) continue;
+            if (visited[nex][ney]) continue;
+            if (map[nex][ney] == '#') continue;
+            visited[nex][ney] = true;
+            dfs(nex,ney);
+        }
+
+    }
 
     static void bfs(int r, int c) {
         Queue<int[]> queue = new LinkedList<>();
@@ -66,17 +73,23 @@ public class Main {
                 map[i][j] = s.charAt(j);
             }
         }
-
+        int wolf = 0;
+        int sheep = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (!visited[i][j]) {
                     if (map[i][j] == 'k' || map[i][j] == 'v') {
-                        bfs(i, j);
+                        w =0;
+                        s = 0;
+                        visited[i][j] = true;
+                        dfs(i, j);
+                        if (w >= s) wolf += w;
+                        if (s > w) sheep += s;
                     }
                 }
             }
         }
-        bw.write(s +" "+ w);
+        bw.write(sheep +" "+ wolf);
         bw.flush();
         bw.close();
         br.close();
