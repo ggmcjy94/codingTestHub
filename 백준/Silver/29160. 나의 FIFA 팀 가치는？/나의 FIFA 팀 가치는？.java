@@ -34,7 +34,7 @@ public class Main {
             int k = Integer.parseInt(st.nextToken());
             position[n].add(k);
         }
-        while (K-- > 0) {
+        for (int i = 0; i<K; i++) {
             for (int j = 1; j <= 11; j++) {
                 if (!position[j].isEmpty() && position[j].peek() > 1) {
                     int value = position[j].poll();
