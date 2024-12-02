@@ -87,6 +87,7 @@ public class Main {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (copyMap[i][j] == 0) {
+                    res = -1;
                     return;
                 }
                 if (visited[i][j]) {
@@ -107,7 +108,7 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         map = new int[N][N];
         checkVisit = new boolean[N][N];
-        res = Integer.MAX_VALUE;
+        res = Integer.MAX_VALUE-1;
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
@@ -116,7 +117,7 @@ public class Main {
         }
         rec(0);
 
-        if (res == Integer.MAX_VALUE) {
+        if (res == Integer.MAX_VALUE-1) {
             bw.write("-1");
         } else {
             bw.write(res+"");
