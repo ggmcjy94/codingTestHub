@@ -16,7 +16,6 @@ public class Main {
     static Queue<int[]> queue = new LinkedList<>();
 
     static void rec(int x) {
-//        System.out.println(x);
         if (x == M) {
             bfs();
             return;
@@ -52,19 +51,10 @@ public class Main {
         for (int i = 0; i < N; i++) {
             copyMap[i] = map[i].clone();
         }
-
-        //6 3
-        //2 1 2 0 1 1
-        //0 0 0 1 0 1
-        //1 1 0 0 2 0
-        //1 0 0 1 0 1
-        //1 0 0 0 0 1
-        //1 1 2 1 0 1
         while (!queue.isEmpty()) {
             int[] poll = queue.poll();
             int nx = poll[0];
             int ny = poll[1];
-//            System.out.println(nx + " : "+ ny);
             for (int i = 0; i < 4; i++) {
                 int nex = nx + dx[i];
                 int ney = ny + dy[i];
@@ -77,20 +67,16 @@ public class Main {
 
             }
         }
-        //2 1 2 0 1 1
-        //3 4 5 1 0 1
-        //1 1 6 7 2 0
-        //1 8 7 1 11 1
-        //1 9 8 9 10 1
-        //1 1 2 1 11 1
         int a = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (copyMap[i][j] == 0) {
+                    check = false;
                     return;
                 }
                 if (visited[i][j]) {
-                   a = Math.max(a, copyMap[i][j]);
+                    check = true;
+                    a = Math.max(a, copyMap[i][j]);
                 }
             }
         }
@@ -116,10 +102,10 @@ public class Main {
         }
         rec(0);
 
-        if (res == Integer.MAX_VALUE-1) {
-            bw.write("-1");
-        } else {
+        if (check) {
             bw.write(res+"");
+        } else {
+            bw.write("-1");
         }
 
         bw.flush();
