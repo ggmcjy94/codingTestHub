@@ -11,6 +11,7 @@ public class Main {
     static boolean[][] visited;
     static boolean[][] checkVisit;
     static boolean[][] virus;
+    static int virusCnt;
     static boolean check;
     static int[] dx = {0, 1, 0, -1};
     static int[] dy = {1 , 0, -1, 0};
@@ -71,9 +72,7 @@ public class Main {
         }
         int a = 0;
         for (int i = 0; i < N; i++) {
-//            System.out.println();
             for (int j = 0; j < N; j++) {
-//                System.out.print(copyMap[i][j] +" ");
                 if (virus[i][j]) {
                     if (visited[i][j]) {
                         a = Math.max(a, copyMap[i][j]);
@@ -84,7 +83,6 @@ public class Main {
                 }
             }
         }
-//        System.out.println();
         res = Math.min(res , a);
     }
 
@@ -104,11 +102,14 @@ public class Main {
             for (int j = 0; j < N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
                 if (map[i][j] == 0) {
+                    virusCnt++;
                      virus[i][j] = true;
                 }
             }
         }
-        rec(0);
+        if (virusCnt > 0) {
+            rec(0);
+        }
 
         if (res == Integer.MAX_VALUE-1) {
             bw.write("-1");
