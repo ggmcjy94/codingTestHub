@@ -10,6 +10,7 @@ public class Main {
     static int[][] copyMap;
     static boolean[][] visited;
     static boolean[][] checkVisit;
+    static boolean[][] virus;
     static boolean check;
     static int[] dx = {0, 1, 0, -1};
     static int[] dy = {1 , 0, -1, 0};
@@ -37,6 +38,7 @@ public class Main {
         queue = new LinkedList<>();
         visited = new boolean[N][N];
         copyMap = new int[N][N];
+
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 copyMap[i][j] = map[i][j];
@@ -69,16 +71,20 @@ public class Main {
         }
         int a = 0;
         for (int i = 0; i < N; i++) {
+//            System.out.println();
             for (int j = 0; j < N; j++) {
-                if (visited[i][j]) {
-                   a = Math.max(a, copyMap[i][j]);
-                } else {
-                    if (copyMap[i][j] == 0) {
-                        return;
+//                System.out.print(copyMap[i][j] +" ");
+                if (virus[i][j]) {
+                    if (visited[i][j]) {
+                        a = Math.max(a, copyMap[i][j]);
+                    } else {
+                        if (copyMap[i][j] == 0) return;
+
                     }
                 }
             }
         }
+//        System.out.println();
         res = Math.min(res , a);
     }
 
@@ -91,11 +97,15 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         map = new int[N][N];
         checkVisit = new boolean[N][N];
+        virus = new boolean[N][N];
         res = Integer.MAX_VALUE-1;
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
+                if (map[i][j] == 0) {
+                     virus[i][j] = true;
+                }
             }
         }
         rec(0);
