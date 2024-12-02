@@ -36,21 +36,21 @@ public class Main {
 
         queue = new LinkedList<>();
         visited = new boolean[N][N];
-
+        copyMap = new int[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (map[i][j] == 3) {
+                copyMap[i][j] = map[i][j];
+                if (copyMap[i][j] == 3) {
                     queue.offer(new int[] {i , j});
                     visited[i][j] = true;
+                    copyMap[i][j] = 0;
+                }
+                if (copyMap[i][j] == 2) {
+                    copyMap[i][j] = 0;
                 }
             }
         }
 
-        copyMap = new int[N][N];
-
-        for (int i = 0; i < N; i++) {
-            copyMap[i] = map[i].clone();
-        }
         while (!queue.isEmpty()) {
             int[] poll = queue.poll();
             int nx = poll[0];
@@ -58,7 +58,7 @@ public class Main {
             for (int i = 0; i < 4; i++) {
                 int nex = nx + dx[i];
                 int ney = ny + dy[i];
-                if (nex < 0 || ney < 0 || nex >= N || ney >= N ||  visited[nex][ney]) continue;
+                if (nex < 0 || ney < 0 || nex >= N || ney >= N || visited[nex][ney]) continue;
                 if (copyMap[nex][ney] == 0) {
                     queue.offer(new int[]{nex, ney});
                     visited[nex][ney] = true;
@@ -70,18 +70,16 @@ public class Main {
         int a = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (copyMap[i][j] == 0) {
-                    check = false;
-                    return;
-                }
                 if (visited[i][j]) {
-                    check = true;
-                    a = Math.max(a, copyMap[i][j]);
+                   a = Math.max(a, copyMap[i][j]);
+                } else {
+                    if (copyMap[i][j] == 0) {
+                        return;
+                    }
                 }
             }
         }
-
-        res = Math.min(res , a-3);
+        res = Math.min(res , a);
     }
 
     public static void main(String[] args) throws IOException {
@@ -102,10 +100,10 @@ public class Main {
         }
         rec(0);
 
-        if (check) {
-            bw.write(res+"");
-        } else {
+        if (res == Integer.MAX_VALUE-1) {
             bw.write("-1");
+        } else {
+            bw.write(res+"");
         }
 
         bw.flush();
