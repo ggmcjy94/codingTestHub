@@ -87,7 +87,6 @@ public class Main {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (copyMap[i][j] == 0) {
-                    res = -1;
                     return;
                 }
                 if (visited[i][j]) {
