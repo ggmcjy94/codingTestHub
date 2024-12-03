@@ -61,7 +61,7 @@ public class Main {
 //            System.out.println(rocket.p +" : " + rocket.v +" : " + rocket.s);
             if (B < rocket.s) break;
             if (sum >= B) {
-                System.out.println(sum);
+//                System.out.println(sum);
                 if (!device) {
                     sum -= rocket.p / 2;
                     device = true;
@@ -80,7 +80,6 @@ public class Main {
 
 
         bw.write(cnt+"");
-
         bw.flush();
         bw.close();
         br.close();
