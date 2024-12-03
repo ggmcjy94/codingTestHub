@@ -61,15 +61,20 @@ public class Main {
 //            System.out.println(rocket.p +" : " + rocket.v +" : " + rocket.s);
             if (B < rocket.s) break;
             if (sum >= B) {
+                System.out.println(sum);
                 if (!device) {
                     sum -= rocket.p / 2;
                     device = true;
+                    cnt++;
                 } else {
                     break;
                 }
             } else {
                 sum += rocket.s;
-                cnt++;
+//                System.out.println(sum);
+                if (sum <= B) {
+                    cnt++;
+                }
             }
         }
 
