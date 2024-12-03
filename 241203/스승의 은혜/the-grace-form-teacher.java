@@ -7,6 +7,7 @@ public class Main {
     static int N , B;
 
 
+
     static class Rocket implements Comparable<Rocket>{
         int p, v, s;
 
@@ -24,14 +25,19 @@ public class Main {
         }
     }
 
-    //5 24
-    //2 0  2
-    //4 2  6
-    //6 3  9
-    //8 1  9
-    //12 5 17
 
-    //
+
+    //10 17
+    //16 33
+    //18 31
+    //15 37
+    //17 34
+    //20 35
+    //15 38
+    //15 31
+    //14 35
+    //16 37
+    //10 38
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -52,6 +58,8 @@ public class Main {
         int cnt = 0;
         int sum = 0;
         for (Rocket rocket : rockets) {
+//            System.out.println(rocket.p +" : " + rocket.v +" : " + rocket.s);
+            if (B < rocket.s) break;
             if (sum >= B) {
                 if (!device) {
                     sum -= rocket.p / 2;
