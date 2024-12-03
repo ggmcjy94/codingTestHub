@@ -37,6 +37,10 @@ public class Main {
             }
         });
 
+//        for (Train train : trains) {
+//            System.out.println(train.p + " : " + train.k);
+//        }
+
         int ans = 1;
         Train startTrain = trains[0];
         for (int i = 1; i<N; i++) {
@@ -45,6 +49,7 @@ public class Main {
                 startTrain.p = nextTrain.p;
             } else {
                 ans++;
+                startTrain = nextTrain;
             }
         }
         bw.write(ans+"");
@@ -52,9 +57,11 @@ public class Main {
         //0 1
         //1 2
         //2 3
+
         //3 2
         //6 1
 
+        //7 3
 
         bw.flush();
         bw.close();
