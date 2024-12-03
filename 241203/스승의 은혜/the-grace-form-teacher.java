@@ -65,7 +65,10 @@ public class Main {
                 if (!device) {
                     sum -= rocket.p / 2;
                     device = true;
-                    cnt++;
+                    if (sum  <= B) {
+                        cnt++;
+                    }
+
                 } else {
                     break;
                 }
