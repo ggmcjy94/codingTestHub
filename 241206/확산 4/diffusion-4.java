@@ -70,7 +70,7 @@ public class Main {
                 bfs();
 
                 for (int j = 0; j < N; j++) {
-                    for (int k = 0; k < N; k ++) {
+                    for (int k = 0; k < M; k ++) {
                         if (map[j][k] =='O') {
                             queue.offer(new int[]{j, k});
                             visited[j][k] = true;
