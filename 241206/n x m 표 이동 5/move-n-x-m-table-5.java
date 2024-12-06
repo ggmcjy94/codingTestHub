@@ -55,13 +55,13 @@ public class Main {
             }
         }
         bfs(1,1);
-        
-        if (map[N][M]  == 0) {
+
+        if (!visited[N][M]) {
             bw.write("0");
         } else {
-            bw.write(map[N][M]+"");    
+            bw.write(map[N][M]+"");
         }
-        
+
         bw.flush();
         bw.close();
         br.close();
