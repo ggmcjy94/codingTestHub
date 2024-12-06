@@ -55,8 +55,13 @@ public class Main {
             }
         }
         bfs(1,1);
-
-        bw.write(map[N][M]+"");
+        
+        if (map[N][M]  == 0) {
+            bw.write("0");
+        } else {
+            bw.write(map[N][M]+"");    
+        }
+        
         bw.flush();
         bw.close();
         br.close();
