@@ -54,7 +54,7 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        arr = new int[7];
+        arr = new int[N+1];
         arr[0] = 1;
         back(1,0);
         bw.flush();
