@@ -16,6 +16,15 @@ public class Main {
 
 
 
+    //.#..##..
+    //........
+    //#...#..#
+    //##......
+    //....#...
+    //.......#
+    //......#.
+    //.....#..
+
 
     static void bfs(int x, int y) {
 
@@ -34,14 +43,6 @@ public class Main {
             if (check) {
                 continue;
             }
-            //........
-            //........
-            //........
-            //........
-            //........
-            //........
-            //##......
-            //........
             for (int i = 0; i < 8; i++) {
                 int nex = nox + dx[i];
                 int ney = noy + dy[i];
@@ -61,16 +62,15 @@ public class Main {
             int nox = walls[0];
             int noy = walls[1];
             if (nox+1 < N) {
-                if (map[nox+1][noy] == '#') {
-                    continue;
-                }
+//                if (map[nox+1][noy] == '#') {
+//                    continue;
+//                }
                 if (visited[nox+1][noy]) {
                     meetList.add(new int[]{nox+1, noy});
                 }
+                map[nox][noy] = '.';
                 map[nox+1][noy] = '#';
                 checkWall.add(new int[]{nox+1, noy});
-            } else {
-                map[nox][noy] = '.';
             }
         }
         wallList.clear();
@@ -99,8 +99,32 @@ public class Main {
                 }
             }
         }
-//        bw.write(map[N-1][0]);
+
+        //.#..##..
+        //........
+        //#...#..#
+        //##......
+        //....#...
+        //.......#
+        //......#.
+        //.....#..
+
+
         bfs(N-1, 0);
+//        for (boolean[] booleans : visited) {
+//            System.out.println();
+//            for (boolean aBoolean : booleans) {
+//                System.out.print(aBoolean +" ");
+//            }
+//        }
+//
+//        for (char[] chars : map) {
+//            System.out.println();
+//            for (char aChar : chars) {
+//                System.out.print(aChar);
+//            }
+//        }
+
         if (visited[0][M-1]) {
             bw.write("1");
         } else {
