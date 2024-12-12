@@ -11,7 +11,7 @@ public class Main {
 
     // 벽을 한 칸 아래로 내리는 함수
     static void moveWalls() {
-        // 맨 아래부터 위로 벽을 내립니다.
+        // 맨 아래부터 위로 벽을 내림
         for (int i = 7; i > 0; i--) {
             board[i] = Arrays.copyOf(board[i - 1], 8);
         }
@@ -29,13 +29,11 @@ public class Main {
         queue.offer(new int[]{7, 0});
         visited[7][0] = true;
 
+        // BFS 탐색
         while (!queue.isEmpty()) {
             int size = queue.size();
 
-            // 한 번의 이동을 완료할 때마다 벽을 내림
-            moveWalls();
-
-            // 큐에서 하나씩 꺼내면서 8방향으로 이동
+            // 큐에서 하나씩 꺼내며 이동
             for (int i = 0; i < size; i++) {
                 int[] curr = queue.poll();
                 int x = curr[0];
@@ -58,6 +56,9 @@ public class Main {
                     }
                 }
             }
+
+            // 한 번의 BFS 탐색이 끝난 후, 벽을 내려야 합니다.
+            moveWalls();
         }
 
         // 목적지에 도달할 수 없다면 0 반환
