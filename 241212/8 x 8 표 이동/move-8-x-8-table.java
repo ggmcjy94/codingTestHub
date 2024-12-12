@@ -8,11 +8,11 @@ public class Main {
     static int[][] arr;
     static int[] dx = {-1, 1, 0, 0, -1, -1, 1, 1};
     static int[] dy = {0, 0, -1, 1, -1, 1, -1, 1};
-
-
+    static List<int[]> wallList = new ArrayList<>();
+    static     boolean[][] visited;
 
     static int bfs() {
-        boolean[][] visited = new boolean[8][8];
+        visited = new boolean[8][8];
         Queue<int[]> queue = new LinkedList<>();
 
         // 시작 위치 (7, 0) 추가
@@ -34,6 +34,7 @@ public class Main {
                     int nex = nox + dx[j];
                     int ney = noy + dy[j];
                     if (nex >= 0 && nex < 8 && ney >= 0 && ney < 8 && !visited[nex][ney] && map[nex][ney] == '.') {
+//                        System.out.println(nex + " : " + ney);
                         visited[nex][ney] = true;
                         queue.offer(new int[]{nex, ney});
                     }
@@ -44,11 +45,33 @@ public class Main {
         return 0;
     }
     static void moveWalls() {
-
-        for (int i = 7; i > 0; i--) {
-            map[i] = Arrays.copyOf(map[i-1],8);
+        for (int i = wallList.size()-1; i > 0; i--) {
+            int[] walls = wallList.get(i);
+            int nox = walls[0];
+            int noy = walls[1];
+            int nex = nox + 1;
+            if (nex < 8) {
+                visited[nox][noy] = false;
+                map[nox][noy] = '.';
+                map[nex][noy] = '#';
+            }
         }
-        Arrays.fill(map[0], '.');
+        wallList.clear();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (map[i][j] =='#') {
+                    wallList.add(new int[]{i, j});
+                }
+            }
+        }
+
+//        for (char[] chars : map) {
+//            System.out.println();
+//            for (char aChar : chars) {
+//                System.out.print(aChar);
+//            }
+//        }
+//        System.out.println();
     }
 
 
@@ -64,6 +87,9 @@ public class Main {
             String s = br.readLine();
             for (int j = 0; j < M; j++) {
                 map[i][j] = s.charAt(j);
+                if (map[i][j]=='#') {
+                    wallList.add(new int[]{i,j});
+                }
             }
         }
         bw.write(bfs()+"");
