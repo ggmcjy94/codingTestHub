@@ -45,7 +45,7 @@ public class Main {
         return 0;
     }
     static void moveWalls() {
-        for (int i = wallList.size()-1; i > 0; i--) {
+        for (int i = wallList.size()-1; i >= 0; i--) {
             int[] walls = wallList.get(i);
             int nox = walls[0];
             int noy = walls[1];
