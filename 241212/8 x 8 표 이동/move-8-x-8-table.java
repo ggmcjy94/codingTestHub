@@ -108,7 +108,7 @@ public class Main {
 //#..#.###
 
         if (map[N-1][0] == '#') {
-            System.out.print("-1");
+            System.out.print("0");
             return;
         }
         bfs(N-1, 0);
