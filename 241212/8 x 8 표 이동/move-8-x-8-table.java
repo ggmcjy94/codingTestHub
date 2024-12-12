@@ -6,8 +6,8 @@ public class Main {
     static int N , M, S;
     static char [][] map;
     static int[][] arr;
-    static int[] dx = {0,1,0,-1,1,-1,-1,1};
-    static int[] dy = {1,0,-1,0,1,-1,1,-1};
+    static int[] dx = {-1, 1, 0, 0, -1, -1, 1, 1};
+    static int[] dy = {0, 0, -1, 1, -1, 1, -1, 1};
     static List<int[]> wallList = new ArrayList<>();
     static boolean[][] meetList;
     static boolean[][] visited;
@@ -40,7 +40,7 @@ public class Main {
         return 0;
     }
     static void moveWalls() {
-        for (int i = wallList.size()-1; i >= 0; i--) {
+        for (int i = wallList.size()-1; i > 0; i--) {
             map[i] = Arrays.copyOf(map[i-1],8);
         }
         Arrays.fill(map[0], '.');
