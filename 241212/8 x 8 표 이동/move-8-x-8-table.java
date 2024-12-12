@@ -16,16 +16,6 @@ public class Main {
 
 
 
-    //.#..##..
-    //........
-    //#...#..#
-    //##......
-    //....#...
-    //.......#
-    //......#.
-    //.....#..
-
-
     static void bfs(int x, int y) {
 
         visited[x][y] = true;
@@ -38,8 +28,8 @@ public class Main {
             boolean check = false;
             for (int[] ints : meetList) {
                 check = Arrays.equals(poll, ints);
-                meetList.remove(new int[]{nox,noy});
             }
+            meetList.clear();
             if (check) {
                 continue;
             }
@@ -56,26 +46,41 @@ public class Main {
         }
     }
 
+
+
+//.#..##..
+//........
+//#...#..#
+//##......
+//....#...
+//.......#
+//......#.
+//.....#..
+
     static void moveWall() {
         List<int []> checkWall = new ArrayList<>();
-        for (int[] walls : wallList) {
+        for (int i = wallList.size()-1; i >= 0; i--) {
+            int[] walls = wallList.get(i);
             int nox = walls[0];
             int noy = walls[1];
-            if (nox+1 < N) {
-//                if (map[nox+1][noy] == '#') {
-//                    continue;
-//                }
-                if (visited[nox+1][noy]) {
-                    meetList.add(new int[]{nox+1, noy});
-                }
-                map[nox][noy] = '.';
-                map[nox+1][noy] = '#';
-                checkWall.add(new int[]{nox+1, noy});
+//            System.out.println(nox +" : " + noy);
+            int nex = nox + 1;
+            if (nex >= N) continue;
+            if (map[nex][noy] == '#') {
+//                System.out.println(nex + " : " + noy);
+                continue;
             }
+            if (visited[nex][noy]) meetList.add(new int[]{nex, noy});
+            map[nox][noy] = '.';
+            map[nex][noy] = '#';
         }
         wallList.clear();
-        if (!checkWall.isEmpty()) {
-            wallList.addAll(checkWall);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (map[i][j] =='#') {
+                    wallList.add(new int[]{i, j});
+                }
+            }
         }
     }
 
