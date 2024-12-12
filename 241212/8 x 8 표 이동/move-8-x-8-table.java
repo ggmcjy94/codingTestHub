@@ -20,20 +20,22 @@ public class Main {
         visited[x][y] = true;
         queue.add(new int[]{x,y});
         while (!queue.isEmpty()) {
-            int[] poll = queue.poll();
+            int size = queue.size();
             moveWalls();
-            int nox = poll[0];
-            int noy = poll[1];
-            if (nox == 0 && noy == 7) {
-                return 1;
-            }
-            for (int i = 0; i < 8; i++) {
-                int nex = nox + dx[i];
-                int ney = noy + dy[i];
-                if (nex < 0 || ney < 0 || nex>=N || ney >= M || visited[nex][ney]) continue;
-                if (map[nex][ney] == '.') {
-                    queue.offer(new int[]{nex, ney});
-                    visited[nex][ney] = true;
+            for (int i = 0; i < size; i++) {
+                int[] curr = queue.poll();
+                int nox = curr[0];
+                int noy = curr[1];
+                if (nox == 0 && noy == 7) {
+                    return 1;
+                }
+                for (int j = 0; j < 8; j++) {
+                    int nx = x + dx[j];
+                    int ny = y + dy[j];
+                    if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8 && !visited[nx][ny] && map[nx][ny] == '.') {
+                        visited[nx][ny] = true;
+                        queue.offer(new int[]{nx, ny});
+                    }
                 }
             }
         }
