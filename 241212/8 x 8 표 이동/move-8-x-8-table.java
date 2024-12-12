@@ -27,12 +27,11 @@ public class Main {
             int noy = poll[1];
             boolean check = false;
             for (int[] ints : meetList) {
-                check = Arrays.equals(poll, ints);
+                if (nox == ints[0] && noy == ints[1]) {
+                    check = true;
+                }
             }
-            meetList.clear();
-            if (check) {
-                continue;
-            }
+            if (check) continue;
             for (int i = 0; i < 8; i++) {
                 int nex = nox + dx[i];
                 int ney = noy + dy[i];
@@ -58,18 +57,13 @@ public class Main {
 //.....#..
 
     static void moveWall() {
-        List<int []> checkWall = new ArrayList<>();
         for (int i = wallList.size()-1; i >= 0; i--) {
             int[] walls = wallList.get(i);
             int nox = walls[0];
             int noy = walls[1];
-//            System.out.println(nox +" : " + noy);
             int nex = nox + 1;
             if (nex >= N) continue;
-            if (map[nex][noy] == '#') {
-//                System.out.println(nex + " : " + noy);
-                continue;
-            }
+            if (map[nex][noy] == '#') continue;
             if (visited[nex][noy]) meetList.add(new int[]{nex, noy});
             map[nox][noy] = '.';
             map[nex][noy] = '#';
@@ -100,19 +94,18 @@ public class Main {
                 map[i][j] = s.charAt(j);
                 if (map[i][j] == '#') {
                     wallList.add(new int[]{i, j});
-                    visited[i][j] = true;
                 }
             }
         }
 
-        //.#..##..
-        //........
-        //#...#..#
-        //##......
-        //....#...
-        //.......#
-        //......#.
-        //.....#..
+//.#..##..
+//........
+//#...#..#
+//##......
+//....#...
+//.......#
+//......#.
+//.....#..
 
 
         bfs(N-1, 0);
