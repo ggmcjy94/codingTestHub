@@ -24,7 +24,7 @@ public class Main {
             moveWalls();
             int nox = poll[0];
             int noy = poll[1];
-            if (x == 0 && y == 7) {
+            if (nox == 0 && noy == 7) {
                 return 1;
             }
             for (int i = 0; i < 8; i++) {
