@@ -16,7 +16,7 @@ public class Main {
 
 
 
-    static void bfs(int x, int y) {
+    static int bfs(int x, int y) {
         visited[x][y] = true;
         queue.add(new int[]{x,y});
         while (!queue.isEmpty()) {
@@ -24,6 +24,9 @@ public class Main {
             moveWalls();
             int nox = poll[0];
             int noy = poll[1];
+            if (x == 0 && y == 7) {
+                return 1;
+            }
             for (int i = 0; i < 8; i++) {
                 int nex = nox + dx[i];
                 int ney = noy + dy[i];
@@ -34,6 +37,7 @@ public class Main {
                 }
             }
         }
+        return 0;
     }
     static void moveWalls() {
         for (int i = wallList.size()-1; i >= 0; i--) {
@@ -58,18 +62,7 @@ public class Main {
                 map[i][j] = s.charAt(j);
             }
         }
-
-        if (map[N-1][0] == '#') {
-            System.out.print("0");
-            return;
-        }
-        bfs(N-1, 0);
-
-        if (visited[0][M-1]) {
-            bw.write("1");
-        } else {
-            bw.write("0");
-        }
+        bw.write(bfs(N-1, 0)+"");
         bw.flush();
         bw.close();
         br.close();
