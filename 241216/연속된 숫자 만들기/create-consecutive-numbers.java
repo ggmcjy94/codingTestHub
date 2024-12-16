@@ -22,19 +22,23 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
         int[] arr = new int[3];
+
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < 3; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
-
         Arrays.sort(arr);
+
 
         int a = arr[0];
         int b = arr[1];
         int c = arr[2];
 
-        if (b-a == 1 && c-a == 1) {
+        if (b-a == 1 && c-b == 1) {
             bw.write(0+ "\n" + 0);
+            bw.flush();
+            bw.close();
+            return;
         }
         int min;
         int max;
