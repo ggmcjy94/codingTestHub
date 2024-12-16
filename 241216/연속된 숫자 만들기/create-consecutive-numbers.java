@@ -10,51 +10,58 @@ public class Main {
     static int[] dy = {0, 0, -1, 1, -1, 1, -1, 1};
     static List<int[]> wallList = new ArrayList<>();
     static boolean[][] visited;
-    
+    static int minVal, maxVal;
 
 
     //1
     //2
+
     
-    static int maxTarget() {
-        int ans = 0;
-        // 4 7 9
-        while (true) {
-            int a = maxCopy[1] - maxCopy[0]; // 3
-            int b = maxCopy[2] - maxCopy[1]; // 2
-            int max = Math.max(a, b);
-            if (a == 1 && b==1) break;
-            if (a == max) {
-                maxCopy[2] = maxCopy[1];
-                maxCopy[1] = (maxCopy[1] + maxCopy[0]) / 2;
-            }
-            if (b == max) {
-                maxCopy[0] = maxCopy[1];
-                maxCopy[1] = (maxCopy[2] + maxCopy[1]) / 2;
-            }
-            ans++;
-        }
-        return ans;
-    }
-    
-    static int minTarget() {
+    static void target() {
         int ans = 0;
         while (true) {
-            int a = minCopy[1] - minCopy[0]; // 3
-            int b = minCopy[2] - minCopy[1]; // 2
-            int min = Math.min(a, b);
-            if (a == 1 && b==1) break;
-            if (a == min) {
-                minCopy[2] = minCopy[1];
-                minCopy[1] = (minCopy[1] + minCopy[0]) / 2;
+            int minA = minCopy[1] - minCopy[0]; // 3
+            int minB = minCopy[2] - minCopy[1]; // 2
+            int maxA = maxCopy[1] - maxCopy[0]; // 3
+            int maxB = maxCopy[2] - maxCopy[1]; // 2
+            boolean minCheck = true;
+            boolean maxCheck = true;
+            int min = Math.min(minA, minB);
+            int max = Math.max(maxA, maxB);
+            if (minA == 1 && minB==1) {
+                minCheck = false;
             }
-            if (b == min) {
-                minCopy[0] = minCopy[1];
-                minCopy[1] = (minCopy[2] + minCopy[1]) / 2;
+            if (maxA == 1 && maxB == 1) {
+                maxCheck = false;
             }
-            ans++;
+            if (!minCheck && !maxCheck) {
+                break;
+            }
+            if (minCheck) {
+                if (minA == min) {
+                    minCopy[2] = minCopy[1];
+                    minCopy[1] = (minCopy[1] + minCopy[0]) / 2;
+                }
+                if (minB == min) {
+                    minCopy[0] = minCopy[1];
+                    minCopy[1] = (minCopy[2] + minCopy[1]) / 2;
+                }
+                minVal++;
+            }
+
+            if (maxCheck) {
+                if (maxA == max) {
+                    maxCopy[2] = maxCopy[1];
+                    maxCopy[1] = (maxCopy[1] + maxCopy[0]) / 2;
+                }
+                if (maxB == max) {
+                    maxCopy[0] = maxCopy[1];
+                    maxCopy[1] = (maxCopy[2] + maxCopy[1]) / 2;
+                }
+                maxVal++;
+            }
+
         }
-        return ans;
     }
     
     
@@ -72,11 +79,9 @@ public class Main {
             minCopy[i] = a;
             maxCopy[i] = a;
         }
-        int min = minTarget();
-        int max = maxTarget();
-
-        bw.write(min+"\n");
-        bw.write(max+"");
+        target();
+        bw.write(minVal+"\n");
+        bw.write(maxVal+"");
         bw.flush();
         bw.close();
         br.close();
