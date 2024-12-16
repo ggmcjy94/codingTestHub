@@ -17,71 +17,34 @@ public class Main {
     //2
 
     
-    static void target() {
-        int ans = 0;
-        while (true) {
-            int minA = minCopy[1] - minCopy[0]; // 3
-            int minB = minCopy[2] - minCopy[1]; // 2
-            int maxA = maxCopy[1] - maxCopy[0]; // 3
-            int maxB = maxCopy[2] - maxCopy[1]; // 2
-            boolean minCheck = true;
-            boolean maxCheck = true;
-            int min = Math.min(minA, minB);
-            int max = Math.max(maxA, maxB);
-            if (minA == 1 && minB==1) {
-                minCheck = false;
-            }
-            if (maxA == 1 && maxB == 1) {
-                maxCheck = false;
-            }
-            if (!minCheck && !maxCheck) {
-                break;
-            }
-            if (minCheck) {
-                if (minA == min) {
-                    minCopy[2] = minCopy[1];
-                    minCopy[1] = (minCopy[1] + minCopy[0]) / 2;
-                }
-                if (minB == min) {
-                    minCopy[0] = minCopy[1];
-                    minCopy[1] = (minCopy[2] + minCopy[1]) / 2;
-                }
-                minVal++;
-            }
-
-            if (maxCheck) {
-                if (maxA == max) {
-                    maxCopy[2] = maxCopy[1];
-                    maxCopy[1] = (maxCopy[1] + maxCopy[0]) / 2;
-                }
-                if (maxB == max) {
-                    maxCopy[0] = maxCopy[1];
-                    maxCopy[1] = (maxCopy[2] + maxCopy[1]) / 2;
-                }
-                maxVal++;
-            }
-
-        }
-    }
-    
-    
-    
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
-
-        minCopy = new int[3];
-        maxCopy = new int[3];
+        int[] arr = new int[3];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < 3; i++) {
-            int a  = Integer.parseInt(st.nextToken());
-            minCopy[i] = a;
-            maxCopy[i] = a;
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        target();
-        bw.write(minVal+"\n");
-        bw.write(maxVal+"");
+
+        Arrays.sort(arr);
+
+        int a = arr[0];
+        int b = arr[1];
+        int c = arr[2];
+
+        if (b-a == 1 && c-a == 1) {
+            bw.write(0+ "\n" + 0);
+        }
+        int min;
+        int max;
+        if (c - b == 2 || b - a == 2) {
+            min = 1;
+        } else {
+            min = 2;
+        }
+        max = Math.max(c - b, b - a) - 1;
+        bw.write(min + "\n" + max);
         bw.flush();
         bw.close();
         br.close();
