@@ -22,24 +22,31 @@ public class Main {
         N = Integer.parseInt(br.readLine());
         List<Developer> developers0 = new ArrayList<>();
         List<Developer> developers1 = new ArrayList<>();
-
+        boolean no = false;
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             int p = Integer.parseInt(st.nextToken());
             int t = Integer.parseInt(st.nextToken());
             if (t == 0) {
+                no = true;
                 developers0.add(new Developer(p, t));
             } else {
                 developers1.add(new Developer(p, t));
             }
         }
         int ans = Integer.MAX_VALUE;
-        for (Developer developer0 : developers0) {
-            for (Developer developer1 : developers1) {
-                ans = Math.min(ans, Math.abs(developer1.pos - developer0.pos));
+        if (no) {
+            
+            for (Developer developer0 : developers0) {
+                for (Developer developer1 : developers1) {
+                    ans = Math.min(ans, Math.abs(developer1.pos - developer0.pos));
+                }
             }
+            ans = ans - 1 ;    
+        } else {
+            ans = 0;
         }
-        ans = ans - 1 ;
+        
         int cnt = 1;
         Collections.sort(developers1, Comparator.comparingInt(o -> o.pos));
         for (int i = 0; i < developers1.size()-1; i++) {
