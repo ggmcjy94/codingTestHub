@@ -23,7 +23,7 @@ public class Main {
             double a =(double) arr[i] / 2;
             sum += a;
         }
-        bw.write(String.format("%.if", sum));
+        bw.write(String.format("%.1f", sum));
         bw.flush();
         bw.close();
         br.close();
