@@ -17,6 +17,9 @@ public class Main {
         }
         Collections.sort(arr);
         // 2 4 6 8
+
+        // 4 6 9
+
         while (arr.size() != 1) {
             double min = arr.get(0) / 2;
             double max = arr.get(arr.size() - 1);
@@ -24,7 +27,6 @@ public class Main {
             arr.remove(0);
             arr.remove(arr.size() - 1);
             arr.add(sum);
-            Collections.sort(arr);
         }
         bw.write(Math.ceil(arr.get(0))+"");
 
