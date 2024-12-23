@@ -11,19 +11,19 @@ public class Main {
         N = Integer.parseInt(br.readLine());
 
         st = new StringTokenizer(br.readLine());
-        double[] arr = new double[N];
+        int[] arr = new int[N];
         for (int i = 0; i < N; i++) {
-            arr[i] = Double.parseDouble(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
         }
         Arrays.sort(arr);
 
         // 2 4 6 8
         double sum = arr[N-1];
-        for (int i = 0; i  < N - 1; i++) {
-            double a = arr[i] / 2;
+        for (int i = N-2; i  >= 0; i++) {
+            double a =(double) arr[i] / 2;
             sum += a;
         }
-        bw.write(Math.ceil(sum)+"");
+        bw.write(String.format("%.if", sum));
         bw.flush();
         bw.close();
         br.close();
