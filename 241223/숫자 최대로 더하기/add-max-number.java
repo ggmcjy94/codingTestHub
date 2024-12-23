@@ -19,8 +19,8 @@ public class Main {
 
         // 2 4 6 8
         double sum = arr[N-1];
-        for (int i = N-2; i  >= 0; i++) {
-            double a =(double) arr[i] / 2;
+        for (int i = N-2; i  >= 0; i--) {
+            double a = (double) arr[i] / 2;
             sum += a;
         }
         bw.write(String.format("%.1f", sum));
