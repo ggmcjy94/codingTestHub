@@ -11,28 +11,19 @@ public class Main {
         N = Integer.parseInt(br.readLine());
 
         st = new StringTokenizer(br.readLine());
-        List<Double> arr = new ArrayList<>();
+        double[] arr = new double[N];
         for (int i = 0; i < N; i++) {
-            arr.add(Double.parseDouble(st.nextToken()));
+            arr[i] = Double.parseDouble(st.nextToken());
         }
-        Collections.sort(arr);
+        Arrays.sort(arr);
+
         // 2 4 6 8
-
-        // 4 6 9
-
-        while (arr.size() != 1) {
-            double min = arr.get(0) / 2;
-            double max = arr.get(arr.size() - 1);
-            double sum = min + max;
-            arr.remove(0);
-            arr.remove(arr.size() - 1);
-            arr.add(sum);
+        double sum = arr[N-1];
+        for (int i = 0; i  < N - 1; i++) {
+            double a = arr[i] / 2;
+            sum += a;
         }
-        bw.write(Math.ceil(arr.get(0))+"");
-
-
-
-
+        bw.write(Math.ceil(sum)+"");
         bw.flush();
         bw.close();
         br.close();
