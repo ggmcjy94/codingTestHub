@@ -1,51 +1,62 @@
 import java.io.*;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
+    static int N;
     public static void main(String[] args) throws IOException {
-        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw  = new BufferedWriter(new OutputStreamWriter(System.out));
-        int read = Integer.parseInt(br.readLine());
-        Deque<Integer> queue = new LinkedList<>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
-        for (int i = 0; i < read; i++) {
+        N = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        Deque<Integer> queue = new ArrayDeque<>();
+        for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            switch (st.nextToken()) {
+            String fun = st.nextToken();
+            switch (fun) {
                 case "push":
-                    queue.add(Integer.parseInt(st.nextToken()));
+                    queue.offer(Integer.parseInt(st.nextToken()));
                     break;
                 case "pop":
-                    int result = blankNum(queue) ? -1 : queue.poll();
-                    bw.write(result+"\n");
+                    if(queue.isEmpty()) {
+                        sb.append("-1").append('\n');
+                    } else {
+                        sb.append(queue.poll()).append('\n');
+                    }
+
                     break;
-                case "size" :
-                    bw.write(queue.size() + "\n");
+                case "size":
+                    sb.append(queue.size()).append('\n');
                     break;
                 case "empty":
-                    int emp = queue.isEmpty() ? 1 : 0;
-                    bw.write(emp + "\n");
+                    if(queue.isEmpty()) {
+                        sb.append("1").append('\n');
+                    } else {
+                        sb.append("0").append('\n');
+                    }
                     break;
                 case "front":
-                    int fr = blankNum(queue)? -1 : queue.peek();
-                    bw.write(fr+"\n");
+                    if(queue.isEmpty()) {
+                        sb.append("-1").append('\n');
+                    } else {
+                        sb.append(queue.peekFirst()).append('\n');
+                    }
                     break;
                 case "back":
-                    int ba = blankNum(queue)? -1 : queue.peekLast();
-                    bw.write(ba+"\n");
-                    break;
-                default:
+                    if(queue.isEmpty()) {
+                        sb.append("-1").append('\n');
+                    } else {
+                        sb.append(queue.peekLast()).append('\n');
+                    }
                     break;
             }
         }
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
+        br.close();
+
     }
 
-    private static boolean blankNum(Queue<Integer> queue) {
-        return queue.size() == 0;
-    }
 }
