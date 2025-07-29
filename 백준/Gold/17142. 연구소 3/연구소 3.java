@@ -1,106 +1,100 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-class Main {
+public class Main {
+    static int N,M;
+    static int[][] map;
+    static int[] dx = {0,0,1,-1};
+    static int[] dy = {1,-1,0,0};
+    static int res = Integer.MAX_VALUE;
+    static List<Virus> virusList;
+    static Virus[] active;
+    static int zeroCnt;
     static class Virus {
-        int x, y, time;
+        int x, y , time;
 
-        Virus(int x, int y, int time) {
+        public Virus(int x, int y, int time) {
             this.x = x;
             this.y = y;
             this.time = time;
         }
     }
-
-    static int N, M;
-    static int[][] arr;
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
-    static List<Virus> viruses = new ArrayList<>();
-    static Virus[] active;
-    static int resultMinTime = Integer.MAX_VALUE;
-    static int originEmptySpace = 0;
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // input
+        StringTokenizer st;
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        
-        arr = new int[N][N];
+        map = new int[N][N];
         active = new Virus[M];
+        virusList = new ArrayList<>();
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-
             for (int j = 0; j < N; j++) {
-                arr[i][j] = Integer.parseInt(st.nextToken());
+                 map[i][j] = Integer.parseInt(st.nextToken());
+                 if (map[i][j] == 0) {
+                     zeroCnt++;
+                 } else if (map[i][j] == 2) {
+                     virusList.add(new Virus(i, j , 0));
+                 }
 
-                if (arr[i][j] == 0) {
-                    originEmptySpace++;
-                } else if (arr[i][j] == 2) {
-                    viruses.add(new Virus(i, j, 0));
-                }
             }
         }
 
-        // solution
-        if (originEmptySpace == 0) {
-            System.out.println(0);
+
+        if (zeroCnt == 0) {
+            bw.write("0");
         } else {
-            selectVirus(0, 0);
-            System.out.println(resultMinTime == Integer.MAX_VALUE ? -1 : resultMinTime);
+            virus(0, 0);
+            int i = res == Integer.MAX_VALUE ? -1 : res;
+            bw.write( i+ "");
         }
+        bw.flush();
+        bw.close();
+        br.close();
     }
 
-    // 백트래킹으로 M 개의 바이러스를 선택하는 Combination 구현
-    static void selectVirus(int start, int selectCount) {
-        if (selectCount == M) {
-            spreadVirus(originEmptySpace);
+    private static void virus(int s,int d) {
+        if (d == M) {
+            bfs(zeroCnt);
             return;
         }
 
-        for (int i = start; i < viruses.size(); i++) {
-            active[selectCount] = viruses.get(i);
-            selectVirus(i + 1, selectCount + 1);
+        for (int i = s; i <  virusList.size(); i++) {
+            active[d] = virusList.get(i);
+            virus(i+1, d+1);
         }
     }
 
-    // BFS 로 바이러스를 퍼트린다
-    static void spreadVirus(int emptySpace) {
-        Queue<Virus> q = new LinkedList<>();
-        boolean[][] infected = new boolean[N][N];
+
+    private static void bfs(int zc) {
+        Queue<Virus> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[N][N];
 
         for (int i = 0; i < M; i++) {
             Virus virus = active[i];
-            infected[virus.x][virus.y] = true;
-            q.add(virus);
+            visited[virus.x][virus.y] = true;
+            queue.offer(virus);
         }
 
-        while (!q.isEmpty()) {
-            Virus virus = q.poll();
-
+        while (!queue.isEmpty()) {
+            Virus poll = queue.poll();
             for (int i = 0; i < 4; i++) {
-                int nx = virus.x + dx[i];
-                int ny = virus.y + dy[i];
+                int nex = poll.x + dx[i];
+                int ney = poll.y + dy[i];
+                if (nex < 0 || ney < 0 || nex >= N || ney >= N || visited[nex][ney] || map[nex][ney] == 1) continue;
 
-                if (nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
-                if (infected[nx][ny] || arr[nx][ny] == 1) continue;
+                if (map[nex][ney] == 0) zc--;
 
-                if (arr[nx][ny] == 0) {
-                    emptySpace--;
-                }
-
-                if (emptySpace == 0) {
-                    resultMinTime = Math.min(resultMinTime, virus.time + 1);
+                if (zc==0) {
+                    res = Math.min(res, poll.time + 1);
                     return;
                 }
-
-                infected[nx][ny] = true;
-                q.add(new Virus(nx, ny, virus.time + 1));
+                visited[nex][ney] = true;
+                queue.add(new Virus(nex,ney, poll.time+1));
             }
         }
     }
